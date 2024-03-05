@@ -44,6 +44,7 @@ jobs:
       working-directory: backend
 
     - name: Run web tests (backend)
+      if: ${{ failure() || success() }}
       id: backend-web-tests
       run: npm test
       working-directory: backend
