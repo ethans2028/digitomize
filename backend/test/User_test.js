@@ -29,7 +29,7 @@ describe('Verify Email Verfication', () => {
     it('Create a new User and verify Email', (done) => {
       console.time('Test Time');
       var newUser = new User({ uid: "tp42182024", username: "Username1", email_verified: true});
-      
+
       const expectedName= true;
       assert.equal(expectedName, newUser.email_verified, "Email was not verifed");
       console.timeEnd('Test Time');
