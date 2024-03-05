@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 18.x
 
@@ -35,13 +35,14 @@ jobs:
     - name: Run UI tests
       run: npm run seleniumtest
 
-    - name: Send some mail
+    - name: Send status email
+      if: ${{ failure() }}
       uses: wadeww/send-email-action@master
       with:
         server_address: smtp.gmail.com
         port: 465
         username: ${{ secrets.EMAIL_SENDER }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
+        password: ${{ secrets.EMAIL_PASSWORD }} 
         subject: Workflow finished
         body: Job completed ${{job.status}}
         to: ${{ secrets.EMAIL_RECIPIENT }}
