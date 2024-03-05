@@ -33,7 +33,7 @@ jobs:
       run: npm run build
 
     - name: Run UI tests
-      run: npm seleniumtest
+      run: npm run seleniumtest
 
     - name: Send email
       if: ${{ failure() }}
