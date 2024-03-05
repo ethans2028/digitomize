@@ -26,14 +26,24 @@ jobs:
       with:
         node-version: 18.x
 
-    - name: Install dependencies
+    - name: Install dependencies (client)
       run: npm ci
 
-    - name: Build project
+    - name: Build project (client)
       run: npm run build
 
-    - name: Run UI tests
+    - name: Run UI tests (client)
+      id: client-ui-tests
       run: npm run seleniumtest
+
+    - name: Install dependencies (backend)
+      run: npm ci
+      working-directory: ../backend
+
+    - name: Run web tests (backend)
+      id: backend-web-tests
+      run: npm test
+      working-directory: ../backend
 
     - name: Send status email
       if: ${{ failure() }}
@@ -45,6 +55,9 @@ jobs:
         username: ${{ secrets.EMAIL_SENDER }}
         password: ${{ secrets.EMAIL_PASSWORD }} 
         subject: Workflow finished
-        body: Job completed ${{job.status}}
+        body: |
+          Did Build succeed: ${{ job.status }}
+          Did UI Tests Pass: ${{ steps.client-ui-tests.conclusion }}
+          Did Web Tests Pass: ${{ steps.backend-web-tests.conclusion }}
         to: ${{ secrets.EMAIL_RECIPIENT }}
         from: Me
