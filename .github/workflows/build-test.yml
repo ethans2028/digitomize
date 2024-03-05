@@ -39,6 +39,7 @@ jobs:
       run: npm run seleniumtest
 
     - name: Install dependencies (backend)
+      if: ${{ failure() || success() }}
       run: npm ci
       working-directory: ../backend
 
@@ -48,7 +49,7 @@ jobs:
       working-directory: ../backend
 
     - name: Send status email
-      if: ${{ failure() }}
+      if: ${{ failure() || success() }}
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
