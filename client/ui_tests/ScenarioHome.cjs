@@ -33,39 +33,39 @@ describe('CanNavigateToLogin', function() {
 });
 
 
-// describe('PreviewUserInputtedProfile', function() {
-//   let driver;
+describe('PreviewUserInputtedProfile', function() {
+  let driver;
 
-//   before(async function() {
-//     driver = await new Builder().forBrowser(Browser.CHROME).build();
-//   });
+  before(async function() {
+    driver = await new Builder().forBrowser(Browser.CHROME).build();
+  });
 
-//   after(async function() {
-//     await driver.quit();
-//   });
+  after(async function() {
+    await driver.quit();
+  });
 
-//   it('run the preview test', async function() {
-//     await driver.get('http://localhost:5173');
-//     await driver.manage().window().maximize();
+  it('run the preview test', async function() {
+    await driver.get('http://localhost:5173');
+    await driver.manage().window().maximize();
 
-//     new Promise(resolve => setTimeout(resolve, 3000));
-//     const username =  "Ethan";
-//     const phone = "1112223333";
-//     const usernameField = await driver.findElement(By.xpath("//input[@name='name']"));
-//     usernameField.sendKeys(username);
+    new Promise(resolve => setTimeout(resolve, 3000));
+    const username =  "Ethan";
+    const phone = "1112223333";
+    const usernameField = await driver.findElement(By.xpath("//input[@name='name']"));
+    usernameField.sendKeys(username);
 
-//     new Promise(resolve => setTimeout(resolve, 1000));
-//     const phoneField = await driver.findElement(By.xpath("//input[@name='phoneNumber']"));
-//     usernameField.sendKeys(username);
+    new Promise(resolve => setTimeout(resolve, 1000));
+    const phoneField = await driver.findElement(By.xpath("//input[@name='phoneNumber']"));
+    usernameField.sendKeys(username);
 
-//     await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
-//     ;
-//     const previewUsername = await driver.findElement(By.xpath("p[text()='pranshu']"));
-//     expect(previewUsername).toBe(username);
+    ;
+    const previewUsername = await driver.findElement(By.xpath("p[text()='pranshu']"));
+    expect(previewUsername).toBe(username);
 
-//     await new Promise(resolve => setTimeout(resolve, 1000));
-//   });
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  });
 
-// });
+});
 
