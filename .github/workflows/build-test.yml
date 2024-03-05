@@ -35,15 +35,14 @@ jobs:
     - name: Run UI tests
       run: npm run seleniumtest
 
-    - name: Send email
-      if: ${{ failure() }}
-      env:
-        EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
-        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD}}
-      run: |
-        BUILD_STATUS=$?
-        TEST_STATUS=$?
-        SUBJECT="Build and Test Results"
-        BODY="Build Status: $BUILD_STATUS\nTest Status: $TEST_STATUS"
-        echo "$BODY" | mail -s "$SUBJECT" -r "$EMAIL_SENDER" -S smtp="smtp.gmail.com:587" -xu "$EMAIL_SENDER" -xp "$EMAIL_PASSWORD" "$EMAIL_RECIPIENT"
+    - name: Send some mail
+      uses: wadeww/send-email-action@master
+      with:
+        server_address: smtp.gmail.com
+        port: 465
+        username: ${{ secrets.EMAIL_SENDER }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: Workflow finished
+        body: Job completed ${{job.status}}
+        to: ${{ secrets.EMAIL_RECIPIENT }}
+        from: Me
