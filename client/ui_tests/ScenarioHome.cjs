@@ -61,8 +61,7 @@ describe('PreviewUserInputtedProfile', function() {
 
     // await new Promise(resolve => setTimeout(resolve, 5000));
     
-    ;
-    const previewUsername = await driver.findElement(By.css("p[text()='Ethan']"));
+    const previewUsername = await driver.findElement(By.xpath("p[text()='Ethan']"));
     expect(previewUsername).toBe(username);
 
     // await new Promise(resolve => setTimeout(resolve, 5000));
