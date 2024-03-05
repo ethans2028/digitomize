@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 18.x
 
@@ -30,20 +30,21 @@ jobs:
       run: npm ci
 
     - name: Build project
-      run: npm run dev
+      run: npm run build
 
     - name: Run UI tests
-      run: npm seleniumtest
+      run: npm run seleniumtest
 
-    - name: Send email
+    - name: Send status email
       if: ${{ failure() }}
-      env:
-        EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
-        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD}}
-      run: |
-        BUILD_STATUS=$?
-        TEST_STATUS=$?
-        SUBJECT="Build and Test Results"
-        BODY="Build Status: $BUILD_STATUS\nTest Status: $TEST_STATUS"
-        echo "$BODY" | mail -s "$SUBJECT" -r "$EMAIL_SENDER" -S smtp="smtp.gmail.com:587" -xu "$EMAIL_SENDER" -xp "$EMAIL_PASSWORD" "$EMAIL_RECIPIENT"
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        secure: true
+        username: ${{ secrets.EMAIL_SENDER }}
+        password: ${{ secrets.EMAIL_PASSWORD }} 
+        subject: Workflow finished
+        body: Job completed ${{job.status}}
+        to: ${{ secrets.EMAIL_RECIPIENT }}
+        from: Me
