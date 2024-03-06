@@ -14,10 +14,13 @@ describe('CanNavigateToLogin', function() {
 
   it('run the login navigation test', async function() {
     await driver.manage().setTimeouts({ implicit: 6000 });
+    // await new Promise(resolve => setTimeout(resolve, 3000));
     await driver.get('https://digitomize.com/home');
     await driver.manage().window().maximize();
-    
+    // await new Promise(resolve => setTimeout(resolve, 3000));
+
     await driver.findElement(By.xpath("//a[text()='Login']")).click();
+    // await new Promise(resolve => setTimeout(resolve, 3000));
     const url =  await driver.getCurrentUrl();
     const expectedUrl = "https://digitomize.com/login";
     await driver.getCurrentUrl(expectedUrl);
@@ -46,7 +49,7 @@ describe('PreviewUserInputtedProfile', function() {
     await driver.get('https://digitomize.com/home');
     await driver.manage().window().maximize();
 
-    // new Promise(resolve => setTimeout(resolve, 3000));
+    // await new Promise(resolve => setTimeout(resolve, 3000));
     const username =  "Ethan";
     const phone = "1112223333";
     const usernameField = await driver.findElement(By.xpath("//input[@name='name']"));
